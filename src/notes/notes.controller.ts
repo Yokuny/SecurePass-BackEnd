@@ -18,9 +18,9 @@ export class NotesController {
   constructor(private readonly service: NotesService) {}
 
   @Post()
-  async register(@Body() body: NewNoteDto, @Param() userId: number) {
+  async registerNote(@Body() body: NewNoteDto, @Param() userId: number) {
     try {
-      await this.service.register(body, userId);
+      await this.service.registerNote(body, userId);
     } catch (err) {
       if (err.code === "P2002") throw new ConflictException("title already in use");
       throw new InternalServerErrorException();

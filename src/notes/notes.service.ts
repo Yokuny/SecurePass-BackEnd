@@ -7,8 +7,8 @@ import { UpdateNoteDto } from "./dto/UpdateNote.dto";
 export class NotesService {
   constructor(private readonly notesRepositories: NotesRepositories) {}
 
-  async register(data: NewNoteDto, userId: number) {
-    return await this.notesRepositories.register(data, userId);
+  async registerNote(data: NewNoteDto, userId: number) {
+    return await this.notesRepositories.registerNote(data, userId);
   }
 
   async findAllNotes(id: number) {

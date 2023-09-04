@@ -7,7 +7,7 @@ import { UpdateNoteDto } from "./dto/UpdateNote.dto";
 export class NotesRepositories {
   constructor(private readonly prisma: PrismaService) {}
 
-  register(data: NewNoteDto, userId: number) {
+  registerNote(data: NewNoteDto, userId: number) {
     return this.prisma.note.create({
       data: { ...data, userId },
     });
