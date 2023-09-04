@@ -1,13 +1,13 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+const Cryptr = require("cryptr");
 import { CredentialCreateDto } from "./dto/CredentialCreate.dto";
 import { CredentialUpdateDto } from "./dto/CredentialUpdate.dto";
 import { CredentialsRepositories } from "./credential.repositories";
-import Cryptr from "cryptr";
 
 @Injectable()
 export class CredentialsService {
   constructor(private readonly repository: CredentialsRepositories) {}
-  cryptr = new Cryptr("SecretKey");
+  cryptr = new Cryptr(process.env.CRYPTO_SECRET);
 
   async createCredential(data: CredentialCreateDto, userId: number) {
     const encryptPassword = this.cryptr.encrypt(data.password);

@@ -1,12 +1,12 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+const Cryptr = require("cryptr");
 import { CardCreateDto } from "./dto/CardCreate.dto";
 import { CardUpdateDto } from "./dto/CardUpdate.dto";
 import { CardsRepositories } from "./cards.repositories";
-import Cryptr from "cryptr";
 
 @Injectable()
 export class CardsService {
-  crypt = new Cryptr("SecretKey");
+  crypt = new Cryptr(process.env.CRYPTO_SECRET);
   constructor(private readonly repository: CardsRepositories) {}
 
   createCard(data: CardCreateDto, userId: number) {
