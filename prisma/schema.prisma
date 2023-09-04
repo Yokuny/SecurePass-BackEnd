@@ -9,3 +9,82 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique()
+  password String 
+  credentials Credential[]
+  notes Note[]
+  cards Card[]
+  wifis Wifi[]
+  licenses License[]
+  @@map("users")
+}
+
+model Card {
+  id Int @id @default(autoincrement())
+  title String 
+  number String
+  name String
+  cvv String
+  expirationDate DateTime
+  password String
+  isVirtual Boolean
+  type Type
+  userId Int
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  @@unique([title,userId])
+  @@map("cards")
+}
+
+enum Type {
+  CREDIT
+  DEBT
+  BOTH
+}
+
+model Credential {
+  id Int @id @default(autoincrement())
+  url String
+  title String 
+  username String
+  password String
+  userId Int
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  @@unique([title,userId])
+  @@map("credentials")
+}
+
+model Note {
+  id Int @id @default(autoincrement())
+  title String 
+  text String
+  userId Int
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  @@unique([title,userId])
+  @@map("notes")
+}
+
+model Wifi {
+  id Int @id @default(autoincrement())
+  title String 
+  network String
+  password String
+  userId Int
+  user User @relation(fields: [userId], references: [id],onDelete: Cascade)
+  @@map("wifis")
+}
+
+model License {
+  id Int @id @default(autoincrement())
+  software String 
+  version String
+  key String
+  userId Int
+  user User @relation(fields: [userId], references: [id],onDelete: Cascade)
+  @@unique([software,version,userId])
+  @@map("licenses")
+}
+
+
