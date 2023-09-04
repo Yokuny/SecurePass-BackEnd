@@ -15,12 +15,17 @@ import { CardCreateDto } from "./dto/CardCreate.dto";
 import { CardUpdateDto } from "./dto/CardUpdate.dto";
 import { User } from "src/commons/decorators/users.decorator";
 import { AuthGuard } from "src/commons/guards/auth.guard";
+import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 
+@ApiTags("Cards controller")
 @Controller("cards")
 @UseGuards(AuthGuard)
 export class CardsController {
   constructor(private readonly service: CardsService) {}
 
+  @ApiOperation({ summary: "Create card" })
+  @ApiResponse({ status: 201, description: "Card created" })
+  @ApiBody({ type: CardCreateDto })
   @Post()
   async createCard(@Body() body: CardCreateDto, @User() userId: number) {
     try {
@@ -32,21 +37,26 @@ export class CardsController {
   }
 
   @Get()
+  @ApiOperation({ summary: "Find all cards" })
+  @ApiResponse({ status: 200, description: "Cards found" })
   findAllCards(@User() userId: number) {
     return this.service.findAllCards(userId);
   }
 
   @Get(":id")
+  @ApiOperation({ summary: "Find one card" })
+  @ApiResponse({ status: 200, description: "Card found" })
+  @ApiParam({ name: "id", type: "number" })
   findOneCard(@Param("id") id: string, @User() userId: number) {
     return this.service.findOneCard(+id, userId);
   }
 
   @Patch(":id")
-  async cardUpdate(
-    @Param("id") id: string,
-    @Body() body: CardUpdateDto,
-    @User() userId: number,
-  ) {
+  @ApiOperation({ summary: "Update card" })
+  @ApiParam({ name: "id", type: "number" })
+  @ApiBody({ type: CardUpdateDto })
+  @ApiResponse({ status: 200, description: "Card updated" })
+  async cardUpdate(@Param("id") id: string, @Body() body: CardUpdateDto, @User() userId: number) {
     try {
       await this.service.cardUpdate(+id, body, userId);
     } catch (err) {
@@ -56,6 +66,9 @@ export class CardsController {
   }
 
   @Delete(":id")
+  @ApiOperation({ summary: "Delete card" })
+  @ApiResponse({ status: 200, description: "Card deleted" })
+  @ApiParam({ name: "id", type: "number" })
   deleteCard(@Param("id") id: string, @User() userId: number) {
     this.service.deleteCard(+id, userId);
   }

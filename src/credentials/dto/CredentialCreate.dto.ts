@@ -2,19 +2,19 @@ import { IsString, IsUrl } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CredentialCreateDto {
-  @ApiProperty()
+  @ApiProperty({ description: "Title" })
   @IsString()
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: "Username" })
   @IsString()
   username: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: "Password" })
   @IsString()
   password: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: "URL" })
   @IsUrl()
   url: string;
 }

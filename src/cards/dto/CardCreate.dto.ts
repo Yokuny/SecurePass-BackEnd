@@ -10,36 +10,36 @@ import {
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CardCreateDto {
-  @ApiProperty()
+  @ApiProperty({ description: "Title" })
   @IsString()
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: "Number" })
   @IsCreditCard()
   number: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: "Name" })
   @IsString()
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: "CVV" })
   @IsNumberString()
   @Length(3)
   cvv: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: "Expiration date" })
   @Matches("^[0-9]{2}/[0-9]{2}$")
   expirationDate: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: "Password" })
   @IsString()
   password: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: "Is virtual" })
   @IsBoolean()
   isVirtual: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ description: "Type" })
   @IsString()
   @IsIn(["CREDIT", "DEBT", "BOTH"])
   type: "CREDIT" | "DEBT" | "BOTH";
