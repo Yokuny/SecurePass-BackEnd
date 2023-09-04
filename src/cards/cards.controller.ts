@@ -42,7 +42,11 @@ export class CardsController {
   }
 
   @Patch(":id")
-  async cardUpdate(@Param("id") id: string, @Body() body: CardUpdateDto, @User() userId: number) {
+  async cardUpdate(
+    @Param("id") id: string,
+    @Body() body: CardUpdateDto,
+    @User() userId: number,
+  ) {
     try {
       await this.service.cardUpdate(+id, body, userId);
     } catch (err) {

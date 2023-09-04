@@ -11,7 +11,7 @@ export class UsersController {
     try {
       return await this.service.register(body);
     } catch (err) {
-      if (err.code === "P2002") throw new ConflictException("Invalid email!");
+      if (err.code === "P2002") throw new ConflictException("Wrong email!");
       throw new InternalServerErrorException();
     }
   }

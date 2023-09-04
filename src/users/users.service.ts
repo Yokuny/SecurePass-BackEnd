@@ -9,7 +9,7 @@ import { UsersRepositories } from "./users.repositories";
 export class UsersService {
   constructor(
     private readonly repository: UsersRepositories,
-    private readonly jwt: JwtService
+    private readonly jwt: JwtService,
   ) {}
 
   async register(body: NewUserDto) {
@@ -24,6 +24,8 @@ export class UsersService {
     const validPassword = await bcrypt.compare(body.password, user.password);
     if (!validPassword) throw new UnauthorizedException("Wrong password!");
 
-    return { token: await this.jwt.sign({ userId: user.id, email: user.email }) };
+    return {
+      token: await this.jwt.sign({ userId: user.id, email: user.email }),
+    };
   }
 }

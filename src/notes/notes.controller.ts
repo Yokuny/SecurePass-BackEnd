@@ -26,7 +26,8 @@ export class NotesController {
     try {
       await this.service.registerNote(body, userId);
     } catch (err) {
-      if (err.code === "P2002") throw new ConflictException("title already in use");
+      if (err.code === "P2002")
+        throw new ConflictException("Wrong title!");
       throw new InternalServerErrorException();
     }
   }
@@ -42,11 +43,15 @@ export class NotesController {
   }
 
   @Patch(":id")
-  async nodeUpdate(@Param("id") id: string, @Body() updateNoteDto: UpdateNoteDto, @User() userId: number) {
+  async nodeUpdate(
+    @Param("id") id: string,
+    @Body() updateNoteDto: UpdateNoteDto,
+    @User() userId: number,
+  ) {
     try {
       await this.service.nodeUpdate(+id, updateNoteDto, userId);
     } catch (err) {
-      if (err.code === "P2002") throw new ConflictException("title already in use");
+      if (err.code === "P2002") throw new ConflictException("Wrong title");
       throw new InternalServerErrorException();
     }
   }

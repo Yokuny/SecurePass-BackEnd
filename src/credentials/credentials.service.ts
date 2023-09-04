@@ -7,7 +7,7 @@ import { CredentialsRepositories } from "./credential.repositories";
 @Injectable()
 export class CredentialsService {
   constructor(private readonly repository: CredentialsRepositories) {}
-  cryptr = new Cryptr(process.env.CRYPTO_SECRET);
+  cryptr = new Cryptr(process.env.CRYPTO_);
 
   async createCredential(data: CredentialCreateDto, userId: number) {
     const encryptPassword = this.cryptr.encrypt(data.password);
@@ -16,7 +16,7 @@ export class CredentialsService {
 
   async findAllCredentials(userId: number) {
     const credentials = await this.repository.findAll(userId);
-    if (credentials.length === 0) throw new NotFoundException("credentials not found");
+    if (credentials.length === 0) throw new NotFoundException("Wrong User ID");
     const decryptCredentials = credentials.map((cred) => ({
       ...cred,
       password: this.cryptr.decrypt(cred.password),
@@ -26,7 +26,7 @@ export class CredentialsService {
 
   private async checkCredentials(id: number, userId: number) {
     const credential = await this.repository.findOne(id);
-    if (!credential) throw new NotFoundException("credential not found");
+    if (!credential) throw new NotFoundException("Wrong Credential ID");
     if (credential.userId !== userId) throw new ForbiddenException();
     return credential;
   }

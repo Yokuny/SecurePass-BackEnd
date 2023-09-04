@@ -14,7 +14,7 @@ export class CardsRepositories {
         userId: userId,
         expirationDate: new Date(
           parseInt("20" + data.expirationDate.slice(-2)),
-          parseInt(data.expirationDate.slice(0, 2)) - 1
+          parseInt(data.expirationDate.slice(0, 2)) - 1,
         ),
       },
     });
@@ -36,7 +36,7 @@ export class CardsRepositories {
           ...data,
           expirationDate: new Date(
             parseInt("20" + data.expirationDate.slice(-2)),
-            parseInt(data.expirationDate.slice(0, 2)) - 1
+            parseInt(data.expirationDate.slice(0, 2)) - 1,
           ),
         },
       });

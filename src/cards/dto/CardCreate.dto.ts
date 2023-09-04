@@ -1,4 +1,12 @@
-import { IsBoolean, IsCreditCard, IsIn, IsNumberString, IsString, Length, Matches } from "class-validator";
+import {
+  IsBoolean,
+  IsCreditCard,
+  IsIn,
+  IsNumberString,
+  IsString,
+  Length,
+  Matches,
+} from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CardCreateDto {

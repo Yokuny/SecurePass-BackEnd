@@ -17,7 +17,7 @@ export class NotesService {
 
   private async checkNote(id: number, userId: number) {
     const note = await this.notesRepositories.findOneNote(id);
-    if (!note) throw new NotFoundException("note not found");
+    if (!note) throw new NotFoundException("Wrong Note ID");
     if (note.userId !== userId) throw new ForbiddenException();
     return note;
   }

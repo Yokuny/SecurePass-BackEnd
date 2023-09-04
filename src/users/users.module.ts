@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { Module } from "@nestjs/common";
+import { UsersController } from "./users.controller";
+import { UsersService } from "./users.service";
 import { UsersRepositories } from "./users.repositories";
 import { JwtModule } from "@nestjs/jwt";
 
@@ -8,7 +8,7 @@ import { JwtModule } from "@nestjs/jwt";
   imports: [
     JwtModule.register({
       global: true,
-      secret: process.env.SECRET,
+      secret: process.env.CRYPTO_SECRET,
       signOptions: { expiresIn: "3 day" },
     }),
   ],

@@ -17,13 +17,13 @@ export class CardsService {
 
   async findAllCards(userId: number) {
     const cards = await this.repository.findAllCards(userId);
-    if (cards.length === 0) throw new NotFoundException("Cards not found");
+    if (cards.length === 0) throw new NotFoundException("Wrong User ID");
     return cards;
   }
 
   private async checkCards(id: number, userId: number) {
     const card = await this.repository.findOneCard(id);
-    if (!card) throw new NotFoundException("Card not Found");
+    if (!card) throw new NotFoundException("Wrong Card ID");
     if (card.userId !== userId) throw new ForbiddenException();
     return card;
   }
