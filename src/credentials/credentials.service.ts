@@ -7,7 +7,7 @@ import { CredentialsRepositories } from "./credential.repositories";
 @Injectable()
 export class CredentialsService {
   constructor(private readonly repository: CredentialsRepositories) {}
-  cryptr = new Cryptr(process.env.CRYPTO_);
+  cryptr = new Cryptr(process.env.CRYPTO_SECRET);
 
   async createCredential(data: CredentialCreateDto, userId: number) {
     const encryptPassword = this.cryptr.encrypt(data.password);
