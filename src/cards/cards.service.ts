@@ -9,16 +9,27 @@ export class CardsService {
   crypt = new Cryptr(process.env.CRYPTO_SECRET);
   constructor(private readonly repository: CardsRepositories) {}
 
-  createCard(data: CardCreateDto, userId: number) {
-    const cryptCvv = this.crypt.encrypt(data.cvv);
-    const cryptPassword = this.crypt.encrypt(data.password);
-    return this.repository.createCard({ ...data, cvv: cryptCvv, password: cryptPassword }, userId);
+  private decryptedCard(card) {
+    const decryptedCard = { ...card };
+    decryptedCard.cvv = this.crypt.decrypt(card.cvv);
+    decryptedCard.password = this.crypt.decrypt(card.password);
+    return decryptedCard;
   }
 
   async findAllCards(userId: number) {
     const cards = await this.repository.findAllCards(userId);
-    if (cards.length === 0) throw new NotFoundException("Wrong User ID");
-    return cards;
+    if (!cards) throw new NotFoundException("Wrong User ID");
+
+    const decryptedCards = cards.map((card) => this.decryptedCard(card));
+
+    return decryptedCards;
+  }
+
+  async findOneCard(id: number, userId: number) {
+    const card = await this.checkCards(id, userId);
+    const decryptedCard = this.decryptedCard(card);
+
+    return decryptedCard;
   }
 
   private async checkCards(id: number, userId: number) {
@@ -28,8 +39,10 @@ export class CardsService {
     return card;
   }
 
-  async findOneCard(id: number, userId: number) {
-    return await this.checkCards(id, userId);
+  createCard(data: CardCreateDto, userId: number) {
+    const cryptCvv = this.crypt.encrypt(data.cvv);
+    const cryptPassword = this.crypt.encrypt(data.password);
+    return this.repository.createCard({ ...data, cvv: cryptCvv, password: cryptPassword }, userId);
   }
 
   async cardUpdate(id: number, data: CardUpdateDto, userId: number) {
