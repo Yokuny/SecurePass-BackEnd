@@ -11,10 +11,10 @@ const init = async () => {
   app.enableCors();
 
   const config = new DocumentBuilder()
-    .setTitle("Cats example")
-    .setDescription("The cats API description")
+    .setTitle("SecurePass API")
+    .setDescription("SecurePass API description")
     .setVersion("1.0")
-    .addTag("cats")
+    .addTag("SECURE PASS API")
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);
