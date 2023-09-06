@@ -14,12 +14,18 @@ model User {
   id Int @id @default(autoincrement())
   email String @unique()
   password String 
-  credentials Credential[]
-  notes Note[]
   cards Card[]
-  wifis Wifi[]
+  credentials Credential[]
   licenses License[]
+  notes Note[]
+  wifis Wifi[]
   @@map("users")
+}
+
+enum Type {
+  CREDIT
+  DEBT
+  BOTH
 }
 
 model Card {
@@ -38,12 +44,6 @@ model Card {
   @@map("cards")
 }
 
-enum Type {
-  CREDIT
-  DEBT
-  BOTH
-}
-
 model Credential {
   id Int @id @default(autoincrement())
   url String
@@ -54,6 +54,17 @@ model Credential {
   user User @relation(fields: [userId],references: [id],onDelete: Cascade)
   @@unique([title,userId])
   @@map("credentials")
+}
+
+model License {
+  id Int @id @default(autoincrement())
+  software String 
+  version String
+  key String
+  userId Int
+  user User @relation(fields: [userId], references: [id],onDelete: Cascade)
+  @@unique([software,version,userId])
+  @@map("licenses")
 }
 
 model Note {
@@ -76,15 +87,6 @@ model Wifi {
   @@map("wifis")
 }
 
-model License {
-  id Int @id @default(autoincrement())
-  software String 
-  version String
-  key String
-  userId Int
-  user User @relation(fields: [userId], references: [id],onDelete: Cascade)
-  @@unique([software,version,userId])
-  @@map("licenses")
-}
+
 
 

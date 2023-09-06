@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 const Cryptr = require("cryptr");
 import { CredentialCreateDto } from "./dto/CredentialCreate.dto";
 import { CredentialUpdateDto } from "./dto/CredentialUpdate.dto";
@@ -9,19 +9,20 @@ export class CredentialsService {
   constructor(private readonly repository: CredentialsRepositories) {}
   cryptr = new Cryptr(process.env.CRYPTO_SECRET);
 
-  async createCredential(data: CredentialCreateDto, userId: number) {
-    const encryptPassword = this.cryptr.encrypt(data.password);
-    return await this.repository.create({ ...data, password: encryptPassword }, userId);
-  }
-
   async findAllCredentials(userId: number) {
     const credentials = await this.repository.findAll(userId);
-    if (credentials.length === 0) throw new NotFoundException("Wrong User ID");
-    const decryptCredentials = credentials.map((cred) => ({
+    if (!credentials) throw new NotFoundException("Wrong User ID");
+
+    const credentialsWithPassword = credentials.map((cred) => ({
       ...cred,
       password: this.cryptr.decrypt(cred.password),
     }));
-    return decryptCredentials;
+    return credentialsWithPassword;
+  }
+
+  async createCredential(data: CredentialCreateDto, userId: number) {
+    const encryptPassword = this.cryptr.encrypt(data.password);
+    return await this.repository.create({ ...data, password: encryptPassword }, userId);
   }
 
   private async checkCredentials(id: number, userId: number) {

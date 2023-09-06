@@ -13,8 +13,12 @@ export class UsersService {
   ) {}
 
   async register(body: NewUserDto) {
-    const hashPassword = await bcrypt.hash(body.password, 10);
-    await this.repository.createUser(body.email, hashPassword);
+    const user = await this.repository.userByEmail(body.email);
+    if (user) throw new UnauthorizedException("User already exists!");
+
+    const encrypted = await bcrypt.hash(body.password, 10);
+
+    await this.repository.createUser(body.email, encrypted);
   }
 
   async login(body: NewUserDto) {

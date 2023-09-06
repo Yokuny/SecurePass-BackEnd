@@ -7,24 +7,24 @@ import { UpdateNoteDto } from "./dto/UpdateNote.dto";
 export class NotesRepositories {
   constructor(private readonly prisma: PrismaService) {}
 
-  registerNote(data: NewNoteDto, userId: number) {
+  registerNote(data: NewNoteDto, id: number) {
     return this.prisma.note.create({
-      data: { ...data, userId },
+      data: { ...data, userId: id },
     });
   }
 
-  findAllNotes(userId: number) {
-    return this.prisma.note.findMany({ where: { userId } });
+  findAllNotes(id: number) {
+    return this.prisma.note.findMany({ where: { userId: id } });
   }
 
   findOneNote(id: number) {
     return this.prisma.note.findUnique({ where: { id } });
   }
 
-  nodeUpdate(id: number, updateNoteDto: UpdateNoteDto) {
+  nodeUpdate(id: number, data: UpdateNoteDto) {
     return this.prisma.note.update({
       where: { id },
-      data: updateNoteDto,
+      data: data,
     });
   }
 

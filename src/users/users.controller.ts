@@ -1,4 +1,5 @@
-import { Controller, Body, Post, ConflictException, InternalServerErrorException } from "@nestjs/common";
+import { Controller, Body, Post, Res, HttpStatus } from "@nestjs/common";
+import { Response } from "express";
 import { UsersService } from "./users.service";
 import { NewUserDto } from "./dtos/NewUserDto.dto";
 import { ApiBody, ApiOperation, ApiTags, ApiResponse } from "@nestjs/swagger";
@@ -10,22 +11,19 @@ export class UsersController {
 
   @ApiOperation({ summary: "Sign up" })
   @ApiBody({ type: NewUserDto })
-  @ApiResponse({ status: 201, description: "User created" })
+  @ApiResponse({ status: 201, description: "Created" })
   @Post("sign-up")
-  async signup(@Body() body: NewUserDto) {
-    try {
-      return await this.service.register(body);
-    } catch (err) {
-      if (err.code === "P2002") throw new ConflictException("Wrong email!");
-      throw new InternalServerErrorException();
-    }
+  async signup(@Body() body: NewUserDto, @Res() res: Response) {
+    await this.service.register(body);
+    return res.sendStatus(HttpStatus.CREATED);
   }
 
   @ApiOperation({ summary: "Sign in" })
   @ApiBody({ type: NewUserDto })
-  @ApiResponse({ status: 200, description: "User logged in" })
+  @ApiResponse({ status: 200, description: "Return user token" })
   @Post("sign-in")
-  async login(@Body() body: NewUserDto) {
-    return this.service.login(body);
+  async login(@Body() body: NewUserDto, @Res() res: Response) {
+    const token = await this.service.login(body);
+    return res.status(HttpStatus.OK).json(token);
   }
 }
