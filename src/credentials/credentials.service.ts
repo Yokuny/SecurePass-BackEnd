@@ -7,7 +7,7 @@ import {
 const Cryptr = require("cryptr");
 import { CredentialCreateDto } from "./dto/CredentialCreate.dto";
 import { CredentialUpdateDto } from "./dto/CredentialUpdate.dto";
-import { CredentialsRepositories } from "./credential.repositories";
+import { CredentialsRepositories } from "./credentials.repositories";
 
 @Injectable()
 export class CredentialsService {
