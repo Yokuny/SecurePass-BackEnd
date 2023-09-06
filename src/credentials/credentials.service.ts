@@ -1,4 +1,9 @@
-import { ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 const Cryptr = require("cryptr");
 import { CredentialCreateDto } from "./dto/CredentialCreate.dto";
 import { CredentialUpdateDto } from "./dto/CredentialUpdate.dto";
@@ -22,7 +27,10 @@ export class CredentialsService {
 
   async createCredential(data: CredentialCreateDto, userId: number) {
     const encryptPassword = this.cryptr.encrypt(data.password);
-    return await this.repository.create({ ...data, password: encryptPassword }, userId);
+    return await this.repository.create(
+      { ...data, password: encryptPassword },
+      userId,
+    );
   }
 
   private async checkCredentials(id: number, userId: number) {
@@ -40,7 +48,11 @@ export class CredentialsService {
     };
   }
 
-  async updateCredential(id: number, data: CredentialUpdateDto, userId: number) {
+  async updateCredential(
+    id: number,
+    data: CredentialUpdateDto,
+    userId: number,
+  ) {
     await this.checkCredentials(id, userId);
     if (data.password) data.password = this.cryptr.encrypt(data.password);
     return await this.repository.updateOne(id, data);

@@ -1,9 +1,11 @@
 import { Controller, Post, Body, UseGuards } from "@nestjs/common";
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+
 import { EraseService } from "./erase.service";
 import { EraseDto } from "./dto/erase.dto";
+
 import { AuthGuard } from "src/commons/guards/auth.guard";
 import { User } from "src/commons/decorators/users.decorator";
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 @ApiTags("Erase controller")
 @Controller("erase")

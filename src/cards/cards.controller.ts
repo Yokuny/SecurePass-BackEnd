@@ -1,24 +1,32 @@
 import {
   Controller,
+  Res,
+  Body,
+  Param,
   Get,
   Post,
-  Body,
   Patch,
-  Param,
   Delete,
-  ConflictException,
-  InternalServerErrorException,
   UseGuards,
   HttpStatus,
-  Res,
+  ConflictException,
+  InternalServerErrorException,
 } from "@nestjs/common";
+import { Response } from "express";
 import { CardsService } from "./cards.service";
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
+
 import { CardCreateDto } from "./dto/CardCreate.dto";
 import { CardUpdateDto } from "./dto/CardUpdate.dto";
+
 import { User } from "src/commons/decorators/users.decorator";
 import { AuthGuard } from "src/commons/guards/auth.guard";
-import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Response } from "express";
 
 @ApiTags("Cards controller")
 @Controller("cards")
@@ -47,13 +55,19 @@ export class CardsController {
   @ApiResponse({ status: 201, description: "Card created" })
   @ApiBody({ type: CardCreateDto })
   @Post()
-  async createCard(@Body() body: CardCreateDto, @User() userId: number, @Res() res: Response) {
+  async createCard(
+    @Body() body: CardCreateDto,
+    @User() userId: number,
+    @Res() res: Response,
+  ) {
     try {
       await this.service.createCard(body, userId);
       return res.status(HttpStatus.CREATED).json({ message: "Card created" });
     } catch (err) {
       if (err.code === "P2002") {
-        return res.status(HttpStatus.CONFLICT).json({ message: "Title already exists" });
+        return res
+          .status(HttpStatus.CONFLICT)
+          .json({ message: "Title already exists" });
       }
       throw new InternalServerErrorException();
     }
@@ -64,7 +78,11 @@ export class CardsController {
   @ApiParam({ name: "id", type: "number" })
   @ApiBody({ type: CardUpdateDto })
   @ApiResponse({ status: 200, description: "Card updated" })
-  async cardUpdate(@Param("id") id: string, @Body() body: CardUpdateDto, @User() userId: number) {
+  async cardUpdate(
+    @Param("id") id: string,
+    @Body() body: CardUpdateDto,
+    @User() userId: number,
+  ) {
     try {
       await this.service.cardUpdate(+id, body, userId);
     } catch (err) {

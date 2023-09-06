@@ -1,4 +1,9 @@
-import { ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { NotesRepositories } from "./notes.repositories";
 import { NewNoteDto } from "./dto/NewNote.dto";
 import { UpdateNoteDto } from "./dto/UpdateNote.dto";
