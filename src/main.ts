@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 const init = async () => {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
 
   const config = new DocumentBuilder()
     .setTitle("Cats example")
