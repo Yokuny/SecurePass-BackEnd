@@ -11,66 +11,71 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique()
-  password String 
-  cards Card[]
+  id          Int          @id @default(autoincrement())
+  email       String       @unique()
+  password    String
+  cards       Card[]
   credentials Credential[]
-  notes Note[]
-  wifis Wifi[]
+  notes       Note[]
+  wifis       Wifi[]
+
   @@map("users")
 }
 
-enum Type {
+enum CardType {
   CREDIT
   DEBT
   BOTH
 }
 
 model Card {
-  id Int @id @default(autoincrement())
-  title String 
-  number String
-  name String
-  cvv String
+  id             Int      @id @default(autoincrement())
+  title          String
+  number         String
+  name           String
+  cvv            String
   expirationDate DateTime
-  password String
-  isVirtual Boolean
-  type Type
-  userId Int
-  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
-  @@unique([title,userId])
+  password       String
+  isVirtual      Boolean
+  type           CardType
+  userId         Int
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([title, userId])
   @@map("cards")
 }
 
 model Credential {
-  id Int @id @default(autoincrement())
-  url String
-  title String 
+  id       Int    @id @default(autoincrement())
+  url      String
+  title    String
   username String
   password String
-  userId Int
-  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
-  @@unique([title,userId])
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([title, userId])
   @@map("credentials")
 }
 
 model Note {
-  id Int @id @default(autoincrement())
-  title String 
-  text String
+  id     Int    @id @default(autoincrement())
+  title  String
+  text   String
   userId Int
-  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
-  @@unique([title,userId])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([title, userId])
   @@map("notes")
 }
 
 model Wifi {
-  id Int @id @default(autoincrement())
-  title String 
-  network String
+  id       Int    @id @default(autoincrement())
+  title    String
+  network  String
   password String
-  userId Int
-  user User @relation(fields: [userId], references: [id],onDelete: Cascade)
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("wifis")
 }
