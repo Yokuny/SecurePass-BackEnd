@@ -47,7 +47,10 @@ export class CardsService {
   createCard(data: CardCreateDto, userId: number) {
     const cryptCvv = this.crypt.encrypt(data.cvv);
     const cryptPassword = this.crypt.encrypt(data.password);
-    return this.repository.createCard({ ...data, cvv: cryptCvv, password: cryptPassword }, userId);
+    return this.repository.createCard(
+      { ...data, cvv: cryptCvv, password: cryptPassword },
+      userId,
+    );
   }
 
   async cardUpdate(id: number, data: CardUpdateDto, userId: number) {
