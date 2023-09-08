@@ -70,6 +70,7 @@ export class NotesController {
       await this.service.registerNote(body, userId);
       return res.status(HttpStatus.CREATED).json({});
     } catch (err) {
+      console.log(err);
       if (err.code === "P2002") {
         return res.status(HttpStatus.CONFLICT).json({ message: "Title already exists" });
       }

@@ -16,7 +16,7 @@ export class CardCreateDto {
   title: string;
 
   @ApiProperty({ description: "Number" })
-  @ApiProperty({ example: "1234567890123456" })
+  @ApiProperty({ example: "5446 9804 5390 8711" })
   @IsCreditCard()
   number: string;
 

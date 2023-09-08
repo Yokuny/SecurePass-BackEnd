@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.card.deleteMany({});
   await prisma.credential.deleteMany({});
-  await prisma.license.deleteMany({});
   await prisma.note.deleteMany({});
   await prisma.wifi.deleteMany({});
   await prisma.user.deleteMany({});
@@ -66,23 +65,6 @@ async function main() {
         title: "Credencial 2",
         username: "usuario2",
         password: "senha2",
-        userId: 2,
-      },
-    ],
-  });
-
-  await prisma.license.createMany({
-    data: [
-      {
-        software: "Software 1",
-        version: "1.0",
-        key: "chave1",
-        userId: 1,
-      },
-      {
-        software: "Software 2",
-        version: "2.0",
-        key: "chave2",
         userId: 2,
       },
     ],

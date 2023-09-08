@@ -32,8 +32,14 @@ export class CardsController {
   @ApiResponse({ status: 200, description: "Cards found or empty array" })
   @ApiBearerAuth()
   @Get()
-  findAllCards(@User() userId: number) {
-    return this.service.findAllCards(userId);
+  async findAllCards(@User() userId: number, @Res() res: Response) {
+    try {
+      const cards = await this.service.findAllCards(userId);
+      return res.status(HttpStatus.OK).json(cards);
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerErrorException();
+    }
   }
 
   @ApiOperation({ summary: "Find one card" })

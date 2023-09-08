@@ -16,7 +16,6 @@ model User {
   password String 
   cards Card[]
   credentials Credential[]
-  licenses License[]
   notes Note[]
   wifis Wifi[]
   @@map("users")
@@ -54,17 +53,6 @@ model Credential {
   user User @relation(fields: [userId],references: [id],onDelete: Cascade)
   @@unique([title,userId])
   @@map("credentials")
-}
-
-model License {
-  id Int @id @default(autoincrement())
-  software String 
-  version String
-  key String
-  userId Int
-  user User @relation(fields: [userId], references: [id],onDelete: Cascade)
-  @@unique([software,version,userId])
-  @@map("licenses")
 }
 
 model Note {

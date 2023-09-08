@@ -7,13 +7,14 @@ const Cryptr = require("cryptr");
 import { CardCreateDto } from "./dto/CardCreate.dto";
 import { CardUpdateDto } from "./dto/CardUpdate.dto";
 import { CardsRepositories } from "./cards.repositories";
+import { Card } from "prisma/prisma-client";
 
 @Injectable()
 export class CardsService {
   crypt = new Cryptr(process.env.CRYPTO_SECRET);
   constructor(private readonly repository: CardsRepositories) {}
 
-  private decryptedCard(card) {
+  private decryptedCard(card: Card) {
     const decryptedCard = { ...card };
     decryptedCard.cvv = this.crypt.decrypt(card.cvv);
     decryptedCard.password = this.crypt.decrypt(card.password);
@@ -46,10 +47,7 @@ export class CardsService {
   createCard(data: CardCreateDto, userId: number) {
     const cryptCvv = this.crypt.encrypt(data.cvv);
     const cryptPassword = this.crypt.encrypt(data.password);
-    return this.repository.createCard(
-      { ...data, cvv: cryptCvv, password: cryptPassword },
-      userId,
-    );
+    return this.repository.createCard({ ...data, cvv: cryptCvv, password: cryptPassword }, userId);
   }
 
   async cardUpdate(id: number, data: CardUpdateDto, userId: number) {
