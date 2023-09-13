@@ -21,7 +21,16 @@ Esqueça suas múltiplas senhas, proteja todas elas com apenas um acesso!
 
 **SecurePass** é um armazenamento seguro de informações para diversos sites e serviços em um só lugar.
 
-É **ideal** para pessoas que possuem múltiplas contas em vários sites e redes sociais, cada uma com senhas distintas, e desejam armazená-las com segurança.
+Ideal para pessoas que possuem múltiplas contas em vários sites e redes sociais, cada uma com senhas distintas, e desejam armazená-las com segurança.
+<br>
+
+### Principais recursos
+
+- **Armazenamento seguro de informações** - Suas informações são criptografadas e armazenadas em um banco de dados, com acesso restrito apenas ao seu usuário.
+- **Acesso rápido e fácil** - Acesse suas informações com apenas um login.
+- **Organização** - Organize suas informações em listas separadas, de acordo com o tipo de dado.
+- **Design responsivo** - Acesse suas informações em qualquer dispositivo, seja no computador, tablet ou celular.
+- **Design intuitivo** - Interface simples e intuitiva, com poucos cliques você consegue acessar, copiar e usar suas informações salvas.
 <br>
 
 ### Como ter acesso:
@@ -32,17 +41,19 @@ No celular, o link de acesso fica no menu superior, ao clicar no botão de menu.
 3. Na página de acesso, faça login com seu e-mail e senha cadastrados; ou crie uma conta, bastando fornecer apenas um e-mail e senha.
 <br>
 
+### Como usar:
 
-### **Como usar:**
+<img src="./public/first-acess.png" alt="first-acess" align="left">
 
 1. Quando você abrir o app pela primeira vez, verá um card vazio com a mensagem "**Comece adicionando um novo item!**”
-![first-acess.png](./public/first-acess.png)
+<br>
 
 2. **Para registrar um novo item**, clique no botão verde inferir para abrir uma tela de registro.
+<br>
 
 3. **Na tela de registro**, você pode adicionar credenciais de sites ou redes sociais, informações de cartão de crédito, notas pessoais e senhas de Wi-Fi.
+<br>
 ![register-card.png](./public/register-card.png)
-
 
 4. **Ao salvar um registro**, você é direcionado para a tela de card, onde suas informações serão apresentadas em uma lista.
     <br>
@@ -61,46 +72,32 @@ No celular, o link de acesso fica no menu superior, ao clicar no botão de menu.
 5. **Para acessar, copiar ou apagar seu registro**, clique no item com o título que você colocou ao registrar a informação.
 <br>
 
-<hr>
+### Tecnologias usadas
 
-### **Tecnologias usadas**
+**Front-end** _(interface)_**:**
+- **[Next.js 13](https://nextjs.org/docs/getting-started)**
+- **[NextUI v2](https://nextui.org/)**
+- **[Tailwind CSS](https://tailwindcss.com/)**
+- **[Tailwind Variants](https://tailwind-variants.org)**
+- **[TypeScript](https://www.typescriptlang.org/)**
+- **[Framer Motion](https://www.framer.com/motion/)**
 
-- [Next.js 13](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
+**Back-end** _(servidor)_**:**
+- **[NestJS](https://nestjs.com/)**
+- **[PostgreSQL](https://www.postgresql.org/)**
+- **[Prisma](https://www.prisma.io/)**
+- **[TypeScript](https://www.typescriptlang.org/)**
+- **[JWT](https://jwt.io/)**
+- **[Bcrypt](https://www.npmjs.com/package/bcrypt)**
+- **[Jest](https://jestjs.io/)**
+- **[Supertest](https://www.npmjs.com/package/supertest)**
+- **[Swagger](https://swagger.io/)**
+- **[Render](https://render.com/)**
+<br>
 
-### **Como rodar o projeto**
+## Como rodar o projeto
 
-_Para que o aplicativo rode perfeitamente, é necessário que o back-end também esteja rodando ativo._
-
-1. Clone o repositório do projeto:
-    ```bash
-    git clone https://github.com/Yokuny/SecurePass
-    ```
-2. Instale as dependências:
-    ```bash
-    npm install
-    ```
-3. Crie o arquivo .env na raiz do projeto e insira a seguinte linha:
-    ```bash
-    #The same url as the back-end
-    NEXT_PUBLIC_API=http://localhost:8080/
-    ```
-4. Rode o projeto em modo de desenvolvimento:
-    ```bash
-    npm run dev
-    ```
-5. Acesse o projeto em:
-    ```bash
-    http://localhost:3000/
-    ```
-6. Para gerar uma build do projeto:
-    ```bash
-    npm run build
-    ```
+**_Para rodar o projeto ambos Front-end e Back-end devem estar rodando._**
 
 ### **Como rodar o back-end**
 
@@ -108,10 +105,12 @@ _Para que o aplicativo rode perfeitamente, é necessário que o back-end também
     ```bash
     git clone https://github.com/Yokuny/SecurePass-BackEnd
     ```
+
 2. Instale as dependências:
     ```bash
     npm install
     ```
+
 3. Crie o arquivo .env na raiz do projeto e insira as seguintes linhas:
     ```bash
     #database connection
@@ -123,6 +122,7 @@ _Para que o aplicativo rode perfeitamente, é necessário que o back-end também
     #server port access used by the front-end
     PORT=8080
     ```
+
 4. Rode o projeto em modo de desenvolvimento:
     ```bash
     # development
@@ -131,3 +131,37 @@ _Para que o aplicativo rode perfeitamente, é necessário que o back-end também
     # watch mode
     npm run start:dev
     ```
+
+### **Como rodar o front-end**
+
+1. Clone o repositório do projeto:
+    ```bash
+    git clone https://github.com/Yokuny/SecurePass
+    ```
+
+2. Instale as dependências:
+    ```bash
+    npm install
+    ```
+
+3. Crie o arquivo .env na raiz do projeto e insira a seguinte linha:
+    ```bash
+    #The same url as the back-end
+    NEXT_PUBLIC_API=http://localhost:8080/
+    ```
+
+4. Rode o projeto em modo de desenvolvimento:
+    ```bash
+    npm run dev
+    ```
+
+5. Acesse o projeto em:
+    ```bash
+    http://localhost:3000/
+    ```
+
+6. Para gerar uma build do projeto:
+    ```bash
+    npm run build
+    ```
+<br>
