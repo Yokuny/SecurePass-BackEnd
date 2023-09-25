@@ -105,6 +105,17 @@ style="margin-right:20px; "/>
 - **[Render](https://render.com/)**
 <br>
 
+## Server
+
+Ao rodar o projeto, a documentação da API estará disponível em:
+_Acesse no seu navegador:_
+
+    http://localhost:PORT/api/
+
+<img src="./public/backend-doc.png" alt="backend documentation" />
+
+
+
 ## Como rodar o projeto
 
 **_Para rodar o projeto ambos Front-end e Back-end devem estar rodando._**
