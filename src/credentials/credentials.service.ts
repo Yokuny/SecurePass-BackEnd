@@ -15,6 +15,7 @@ export class CredentialsService {
   cryptr = new Cryptr(process.env.CRYPTO_SECRET);
 
   async findAllCredentials(userId: number) {
+    console.log(process.env.CRYPTO_SECRET);
     const credentials = await this.repository.findAll(userId);
     if (!credentials) throw new NotFoundException("Wrong User ID");
 
